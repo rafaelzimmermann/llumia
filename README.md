@@ -48,3 +48,11 @@ The install script sets this up automatically. To do it manually:
 ```bash
 ./install.sh --launchagent
 ```
+
+## Uninstall
+
+```bash
+./install.sh --uninstall
+```
+
+Stops the app, removes the launch agent, log file, and the entire repo directory.

@@ -59,8 +59,33 @@ EOF
     echo "Launch agent installed — llumia will start at login."
 }
 
+uninstall() {
+    echo "Stopping and removing llumia..."
+
+    # Stop and remove launch agent
+    if [[ -f "$LAUNCH_AGENT" ]]; then
+        launchctl unload "$LAUNCH_AGENT" 2>/dev/null || true
+        rm -f "$LAUNCH_AGENT"
+        echo "  Removed launch agent."
+    fi
+
+    # Remove log file
+    rm -f "$HOME/Library/Logs/llumia.log"
+
+    # Remove repo directory
+    echo "  Removing $REPO_DIR..."
+    rm -rf "$REPO_DIR"
+
+    echo "llumia uninstalled."
+}
+
 if [[ "$1" == "--launchagent" ]]; then
     install_launch_agent
+    exit 0
+fi
+
+if [[ "$1" == "--uninstall" ]]; then
+    uninstall
     exit 0
 fi
 
@@ -69,3 +94,4 @@ echo "llumia installed."
 echo ""
 echo "Run now:           ./start.sh"
 echo "Auto-start login:  ./install.sh --launchagent"
+echo "Uninstall:         ./install.sh --uninstall"
