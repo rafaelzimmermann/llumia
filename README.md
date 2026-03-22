@@ -29,20 +29,30 @@ cd llumia
 ./install.sh
 ```
 
-## How it works
+## Usage
 
-- **Claude**: Sends a minimal POST to `api.anthropic.com/v1/messages` using your OAuth token (from `~/.claude/.credentials.json`) with the undocumented `anthropic-beta: oauth-2025-04-20` header. Usage data comes back in response headers (`anthropic-ratelimit-unified-*`). Results cached 5 minutes.
-- **Z.ai**: GETs `https://api.z.ai/api/monitor/usage/quota/limit` using the API key from your opencode config. Results cached 1 minute.
+The menu bar shows current usage at a glance:
+
+```
+🤖 C 42%  Z 67%
+```
+
+Click the icon to expand the menu and see details for each provider — usage bar, percentage, quota window, and time until reset.
+
+Refreshes every 60 seconds. Click **Refresh** to force an update.
 
 ## Display
 
-| Color | Meaning |
-|-------|---------|
+| Indicator | Meaning |
+|-----------|---------|
 | ○ | < 70% used |
 | ◕ | 70–89% used |
 | ● | ≥ 90% used or rejected |
 
-Refreshes every 60 seconds. Click **Refresh** in the menu to force an update.
+## How it works
+
+- **Claude**: reads your OAuth token from Keychain (or `~/.claude/.credentials.json`) and makes a minimal API call to read usage from response headers. Cached for 5 minutes.
+- **Z.ai**: reads your API key from `~/.config/opencode/opencode.json` (or `ZAI_API_KEY` env var) and polls the quota endpoint. Cached for 1 minute.
 
 ## Auto-launch on login
 

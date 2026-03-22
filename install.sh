@@ -8,9 +8,15 @@ LAUNCH_AGENT="$HOME/Library/LaunchAgents/com.llumia.plist"
 if command -v uv &>/dev/null; then
     echo "Installing dependencies with uv..."
     uv pip install -r "$REPO_DIR/requirements.txt" --quiet
-else
-    echo "Installing dependencies with pip..."
+elif command -v pip &>/dev/null; then
+    echo "uv not found, falling back to pip..."
+    echo "  (Install uv for faster installs: https://github.com/astral-sh/uv)"
     pip install -r "$REPO_DIR/requirements.txt" --quiet
+else
+    echo "Error: neither uv nor pip found. Install one of:"
+    echo "  uv:  https://github.com/astral-sh/uv"
+    echo "  pip: https://pip.pypa.io/en/stable/installation/"
+    exit 1
 fi
 
 # ── launch agent ────────────────────────────────────────────────────────────
@@ -22,6 +28,10 @@ install_launch_agent() {
         <string>run</string>
         <string>$REPO_DIR/widget.py</string>"
     else
+        if ! command -v python3 &>/dev/null; then
+            echo "Error: python3 not found. Install Python 3.9+ or uv."
+            exit 1
+        fi
         RUNNER="$(command -v python3)"
         PROG_ARGS="<string>$RUNNER</string>
         <string>$REPO_DIR/widget.py</string>"
