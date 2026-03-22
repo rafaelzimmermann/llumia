@@ -1,3 +1,4 @@
+import json
 import os
 import pytest
 import zai_api
@@ -174,13 +175,12 @@ def test_env_var_takes_priority(tmp_path, monkeypatch):
 
 def test_opencode_takes_priority_over_continue(tmp_path, monkeypatch):
     """opencode.json wins over Continue.dev files."""
-    import json as _json
     monkeypatch.delenv("ZAI_API_KEY", raising=False)
     monkeypatch.setattr(os.path, "expanduser", _expanduser_factory(tmp_path))
 
     opencode_dir = tmp_path / ".config" / "opencode"
     opencode_dir.mkdir(parents=True)
-    (opencode_dir / "opencode.json").write_text(_json.dumps({
+    (opencode_dir / "opencode.json").write_text(json.dumps({
         "provider": {
             "zai-coding-plan": {
                 "options": {"apiKey": "opencode-key"}
@@ -195,3 +195,15 @@ def test_opencode_takes_priority_over_continue(tmp_path, monkeypatch):
     )
 
     assert zai_api._get_api_key() == "opencode-key"
+
+
+def test_continue_yaml_no_models_key_falls_through(tmp_path, monkeypatch):
+    """A valid YAML file with no models key is treated as absent."""
+    monkeypatch.delenv("ZAI_API_KEY", raising=False)
+    monkeypatch.setattr(os.path, "expanduser", _expanduser_factory(tmp_path))
+
+    cfg_dir = tmp_path / ".continue"
+    cfg_dir.mkdir(parents=True)
+    (cfg_dir / "config.yaml").write_text("timeout: 30\n")
+
+    assert zai_api._get_api_key() is None

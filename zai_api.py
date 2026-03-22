@@ -32,9 +32,9 @@ def _get_api_key() -> str | None:
             cfg = yaml.safe_load(f)
         for model in cfg.get("models", []):
             if model.get("provider") == "zAI":
-                key = model.get("apiKey", "")
-                if key:
-                    return key
+                api_key = model.get("apiKey", "")
+                if api_key:
+                    return api_key
     except Exception:
         pass
 
@@ -44,9 +44,9 @@ def _get_api_key() -> str | None:
             cfg = json.load(f)
         for model in cfg.get("models", []):
             if model.get("provider") == "zAI":
-                key = model.get("apiKey", "")
-                if key:
-                    return key
+                api_key = model.get("apiKey", "")
+                if api_key:
+                    return api_key
     except Exception:
         pass
 
@@ -65,7 +65,7 @@ def fetch() -> dict | None:
     req = urllib.request.Request(
         "https://api.z.ai/api/monitor/usage/quota/limit",
         headers={
-            "Authorization": api_key,
+            "Authorization": api_key,  # Z.ai monitor API uses raw key, no Bearer prefix
             "Accept-Language": "en-US,en",
         },
     )
