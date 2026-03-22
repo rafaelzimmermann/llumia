@@ -3,6 +3,7 @@
 import json
 import os
 import time
+import yaml
 import urllib.request
 import urllib.error
 
@@ -14,13 +15,42 @@ def _get_api_key() -> str | None:
     key = os.environ.get("ZAI_API_KEY")
     if key:
         return key
+
     config_path = os.path.expanduser("~/.config/opencode/opencode.json")
     try:
         with open(config_path) as f:
             cfg = json.load(f)
-        return cfg["provider"]["zai-coding-plan"]["options"]["apiKey"]
+        key = cfg["provider"]["zai-coding-plan"]["options"]["apiKey"]
+        if key:
+            return key
     except Exception:
-        return None
+        pass
+
+    yaml_path = os.path.expanduser("~/.continue/config.yaml")
+    try:
+        with open(yaml_path) as f:
+            cfg = yaml.safe_load(f)
+        for model in cfg.get("models", []):
+            if model.get("provider") == "zAI":
+                key = model.get("apiKey", "")
+                if key:
+                    return key
+    except Exception:
+        pass
+
+    json_path = os.path.expanduser("~/.continue/config.json")
+    try:
+        with open(json_path) as f:
+            cfg = json.load(f)
+        for model in cfg.get("models", []):
+            if model.get("provider") == "zAI":
+                key = model.get("apiKey", "")
+                if key:
+                    return key
+    except Exception:
+        pass
+
+    return None
 
 
 def fetch() -> dict | None:
