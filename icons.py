@@ -5,11 +5,14 @@ import os
 _DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), ".icons")
 
 
-def claude_icon() -> str | None:
-    p = os.path.join(_DIR, "claude@2x.png")
+def _icon(name: str) -> str | None:
+    p = os.path.join(_DIR, f"{name}@2x.png")
     return p if os.path.exists(p) else None
+
+
+def claude_icon() -> str | None:
+    return _icon("claude")
 
 
 def zai_icon() -> str | None:
-    p = os.path.join(_DIR, "zai@2x.png")
-    return p if os.path.exists(p) else None
+    return _icon("zai")

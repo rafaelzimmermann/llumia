@@ -74,8 +74,7 @@ def fetch() -> dict | None:
         return headers.get(f"anthropic-ratelimit-unified-{name}", "")
 
     claim = h("representative-claim")  # "five_hour" or "seven_day"
-    window = "5h" if claim == "five_hour" else "7d"
-    prefix = "5h" if window == "5h" else "7d"
+    prefix = window = "5h" if claim == "five_hour" else "7d"
 
     try:
         utilization = float(h(f"{prefix}-utilization"))

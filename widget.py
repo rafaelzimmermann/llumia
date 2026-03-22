@@ -21,13 +21,6 @@ def pct_bar(pct: int, width: int = 8) -> str:
     return "█" * filled + "░" * (width - filled)
 
 
-def status_dot(pct: int, status: str = "allowed") -> str:
-    if pct >= 90 or status == "rejected":
-        return "●"   # will show red via title color trick — use text label
-    if pct >= 70:
-        return "◕"
-    return "○"
-
 
 class AIUsageWidget(rumps.App):
     def __init__(self):
@@ -58,10 +51,8 @@ class AIUsageWidget(rumps.App):
 
         parts = []
         if claude:
-            bar = pct_bar(claude["pct"])
             parts.append(f"C {claude['pct']}%")
         if zai:
-            bar = pct_bar(zai["pct"])
             parts.append(f"Z {zai['pct']}%")
 
         self.title = "🤖 " + "  ".join(parts) if parts else "🤖 ?"
