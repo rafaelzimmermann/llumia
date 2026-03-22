@@ -15,13 +15,13 @@ macOS menu bar widget showing Claude and Z.ai quota usage.
 ## Install
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/spike/llumia/main/install.sh | bash
+curl -fsSL https://raw.githubusercontent.com/rafaelzimmermann/llumia/main/install.sh | bash
 ```
 
 Or manually:
 
 ```bash
-git clone https://github.com/spike/llumia.git
+git clone https://github.com/rafaelzimmermann/llumia.git
 cd llumia
 ./install.sh
 ```
