@@ -55,7 +55,12 @@ class AIUsageWidget(rumps.App):
         if zai:
             parts.append(f"Z {zai['pct']}%")
 
-        self.title = "🤖 " + "  ".join(parts) if parts else "🤖 ?"
+        self.title = "🤖 " + "  ".join(parts) if parts else "🤖"
+
+        if not claude and not zai:
+            self.menu["Claude"].title = "No AI tool found"
+            self.menu["Z.ai"].title = ""
+            return
 
         if claude:
             reset_str = fmt_reset(claude["reset_secs"])
