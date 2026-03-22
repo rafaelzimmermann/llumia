@@ -1,0 +1,8 @@
+[project]
+name = "llumia"
+version = "0.1.0"
+description = "macOS menu bar widget showing Claude and Z.ai quota usage"
+requires-python = ">=3.9"
+dependencies = [
+    "rumps>=0.4.0",
+]
