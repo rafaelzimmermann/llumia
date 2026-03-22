@@ -2,6 +2,9 @@
 
 macOS menu bar widget showing Claude and Z.ai quota usage.
 
+<img width="870" height="344" alt="image" src="https://github.com/user-attachments/assets/04f299b4-539b-431f-b914-61c365090fc1" />
+
+
 > *Llumia* — Catalan for "light", hiding both **LLM** and **IA** (Intel·ligència Artificial).
 
 ## Requirements
