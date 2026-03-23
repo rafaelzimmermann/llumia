@@ -16,3 +16,11 @@ def claude_icon() -> str | None:
 
 def zai_icon() -> str | None:
     return _icon("zai")
+
+
+def load_icon(name: str) -> str | None:
+    if name == "Claude":
+        return claude_icon()
+    if name == "Z.ai":
+        return zai_icon()
+    return None
