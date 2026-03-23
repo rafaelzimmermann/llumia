@@ -23,4 +23,6 @@ def load_icon(name: str) -> str | None:
         return claude_icon()
     if name == "Z.ai":
         return zai_icon()
+    if name in ("OpenRouter", "Kimi K2", "JetBrains AI", "Kiro"):
+        return None  # icons not yet available
     return None

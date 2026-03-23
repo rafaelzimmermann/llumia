@@ -9,6 +9,6 @@ class ProviderResult:
     pct: int
     reset_secs: int
 
-from providers import claude, zai  # noqa: E402 — must come after ProviderResult
+from providers import claude, zai, openrouter, kimi_k2, jetbrains, kiro  # noqa: E402 — must come after ProviderResult
 
-PROVIDERS = [claude, zai]
+PROVIDERS = [claude, zai, openrouter, kimi_k2, jetbrains, kiro]
